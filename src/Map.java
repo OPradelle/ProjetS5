@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
 import java.util.Random;
 
@@ -17,9 +18,19 @@ public class Map
 
 	public Map(int width, int height)
 	{
-		this.width = width > 0 ? width : DEFAULT_MAP_WIDTH;
-		this.height = height > 0 ? height : DEFAULT_MAP_HEIGHT;
+		setWidth(width);
+		setHeight(height);
 
+	}
+
+	public void setHeight(int height)
+	{
+		this.height = height > 0 ? height : DEFAULT_MAP_HEIGHT;
+	}
+
+	public void setWidth(int width)
+	{
+		this.width = width > 0 ? width : DEFAULT_MAP_WIDTH;
 	}
 
 	public void generatePatches(int nb)
@@ -39,6 +50,46 @@ public class Map
 
 			this.patches.add(position);
 		}
+	}
+
+	public void readFromFile(String filename)
+	{
+		int mapSize = 0;
+		int index;
+		int nbLine = 0;
+
+		this.patches = new ArrayList<Position>();
+
+		try
+		{
+			InputStream inputStream = new FileInputStream(new File(filename));
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			String line;
+			if ((line = bufferedReader.readLine()) != null)
+			{
+				mapSize = Integer.parseInt(line);
+			}
+			setHeight(mapSize);
+			setWidth(mapSize);
+			while ((line = bufferedReader.readLine()) != null)
+			{
+				for (index = 0; index < line.length(); index++)
+				{
+					if (line.charAt(index) == '*')
+					{
+						this.patches.add(new Position(nbLine, index));
+					}
+				}
+				nbLine++;
+			}
+			bufferedReader.close();
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+
 	}
 
 	public void removePatch(Position pos)
