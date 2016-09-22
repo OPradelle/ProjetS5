@@ -6,9 +6,9 @@ public class Application
 		map = new Map(10, 10);
 		map.generatePatches(5);
 
-		Agent agent = new Agent();
+		//Agent agent = new Agent();
 
 		map.drawMap();
-		System.out.println(agent.getPosition());
+		//System.out.println(agent.getPosition());
 	}
 }
