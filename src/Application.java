@@ -7,16 +7,17 @@ public class Application
 		String fileName;
 		Map map = new Map();
 		
-		fileName = FILE_NAME;
+		map.readFromFile(FILE_NAME);
+		map.drawMap();
 		
-		map.readFromFile(fileName);
-		map.drawMap();
-		/*map = new Map(10, 10);
-		map.generatePatches(5);
-
-		//Agent agent = new Agent();
-
-		map.drawMap();
-		//System.out.println(agent.getPosition());*/
+		Agent agent = new Agent();
+		agent.setAgentController(new RandomAgentController());
+		
+		for(int i = 0; i < 1000; i++)
+		{
+			agent.update(map);
+			System.out.println(agent.getPosition());
+			
+		}
 	}
 }

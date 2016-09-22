@@ -1,5 +1,6 @@
 public class Agent
 {
+	private AgentController agentController;
 	private Position position;
 	private float rotation;
 	private boolean moving;
@@ -41,8 +42,11 @@ public class Agent
 		this.moving = moving;
 	}
 
-	public void update()
+	public void update(Map map)
 	{
+		if (this.agentController != null)
+			this.agentController.update(this, map);
+		
 		move();
 	}
 
@@ -54,5 +58,11 @@ public class Agent
 		float deltaX = (float) Math.cos(Math.toRadians(this.rotation));
 		float deltaY = (float) Math.sin(Math.toRadians(this.rotation));
 		this.position.move(deltaX, deltaY);
+	}
+
+	public void setAgentController(AgentController agentController)
+	{
+		this.agentController = agentController;
+		this.agentController.init(this);
 	}
 }

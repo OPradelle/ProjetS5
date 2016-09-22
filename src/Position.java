@@ -57,4 +57,9 @@ public class Position
 	{
 		return "(" + (int)x + ";" + (int)y + ")";
 	}
+
+	public float getDistance(Position pos)
+	{
+		return (float) Math.sqrt(Math.pow(pos.getX() - x, 2) + Math.pow(pos.getY() - y, 2));
+	}
 }

@@ -33,6 +33,16 @@ public class Map
 		this.width = width > 0 ? width : DEFAULT_MAP_WIDTH;
 	}
 
+	public int getHeight()
+	{
+		return this.height;
+	}
+
+	public int getWidth()
+	{
+		return this.width;
+	}
+
 	public void generatePatches(int nb)
 	{
 		this.patches = new ArrayList<Position>();
