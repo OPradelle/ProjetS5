@@ -13,6 +13,12 @@ public class Position
 		this.setY(y);
 	}
 
+	public Position(Position pos)
+	{
+		this.setX(pos.getX());
+		this.setY(pos.getY());
+	}
+
 	public float getX()
 	{
 		return this.x;
@@ -32,7 +38,7 @@ public class Position
 	{
 		this.y = y;
 	}
-	
+
 	public void move(float deltaX, float deltaY)
 	{
 		this.x += deltaX;
@@ -49,17 +55,17 @@ public class Position
 	public boolean equals(Object obj)
 	{
 		Position pos = (Position) obj;
-		return ((int)pos.getX() == (int)x && (int)pos.getY() == (int)y);
+		return ((int) pos.getX() == (int) x && (int) pos.getY() == (int) y);
 	}
-	
+
 	@Override
 	public String toString()
 	{
-		return "(" + (int)x + ";" + (int)y + ")";
+		return "(" + x + ";" + y + ")";
 	}
 
 	public float getDistance(Position pos)
 	{
-		return (float) Math.sqrt(Math.pow(pos.getX() - x, 2) + Math.pow(pos.getY() - y, 2));
+		return (float) Math.hypot(pos.getX() - x, pos.getY() - y);
 	}
 }

@@ -2,63 +2,56 @@ import java.util.Random;
 
 public class RandomAgentController implements AgentController
 {
-	private Position nextTarget;
+	private Position initialPosition;
 	private Random rand;
-	
+	private float distance;
+
 	public RandomAgentController()
 	{
 		this.rand = new Random();
-		
-		this.nextTarget = new Position(0, 0);
+		this.distance = 0;
 	}
 
 	@Override
 	public void init(Agent agent)
 	{
-		agent.setMoving(true);
+		this.initialPosition = new Position(agent.getPosition());
 	}
 
 	@Override
 	public void update(Agent agent, Map map)
 	{
-		if (!(agent.getPosition().equals(this.nextTarget)))
+		// Si l'agent ne bouge pas, on le met a jour ( pas de paresseux chez les agents ! )
+		if (agent.isMoving() && agent.getPosition().getDistance(this.initialPosition) < distance)
 			return;
-		
-		System.out.println("update");
 
-		Position fictionPositionPoint;
-		float angle, sideA, sideB, sideC, a2, b2, c2;
+		if (!agent.isMoving())
+			agent.setMoving(true);
 
-		setNewRandomTarget(map);
-		System.out.println(this.nextTarget);
+		this.initialPosition = new Position(agent.getPosition());
+		do
+		{
+			agent.setRotation(rand.nextFloat() * 359);
+			this.distance = rand.nextFloat() * distanceToMapBorder(new Position(agent.getPosition()), agent.getRotation(), map);
 
-		fictionPositionPoint = new Position(agent.getPosition().getX() + 100, agent.getPosition().getY());
-
-		// On calcule la dictance entre chacun des points pour déterminer
-		// l'angle
-		sideA = agent.getPosition().getDistance(fictionPositionPoint);
-		sideB = agent.getPosition().getDistance(this.nextTarget);
-		sideC = fictionPositionPoint.getDistance(this.nextTarget);
-
-		// Calcul de l'angle
-		a2 = (float) Math.pow(sideA, 2);
-		b2 = (float) Math.pow(sideB, 2);
-		c2 = (float) Math.pow(sideC, 2);
-
-		angle = (float) Math.acos((a2 + b2 - c2) / (2 * sideA * sideB));
-		
-		agent.setRotation((float)Math.toDegrees(angle));
-		System.out.println((float)Math.toDegrees(angle));
+		} while (this.distance <= 1); // On bouge au moins de 1
 	}
 
-	private void setNewRandomTarget(Map map)
+	/*
+	 * Fait avancer une position temporaire jusqu'à la fin de la map et retourne
+	 * la distance qu'elle a parcourue
+	 */
+	private float distanceToMapBorder(Position pos, float rotation, Map map)
 	{
-		int x, y;
-		x = rand.nextInt(map.getWidth());
-		y = rand.nextInt(map.getHeight());
+		Position tempPos = new Position(pos);
 
-		this.nextTarget = new Position(x, y);
+		while (tempPos.getX() >= 0 && tempPos.getX() < map.getWidth() && tempPos.getY() >= 0 && tempPos.getY() < map.getHeight())
+		{
+			float deltaX = (float) Math.cos(Math.toRadians(rotation));
+			float deltaY = (float) Math.sin(Math.toRadians(rotation));
+			tempPos.move(deltaX, deltaY);
+		}
+
+		return pos.getDistance(tempPos);
 	}
-	
-	
 }

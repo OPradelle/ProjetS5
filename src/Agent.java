@@ -46,11 +46,11 @@ public class Agent
 	{
 		if (this.agentController != null)
 			this.agentController.update(this, map);
-		
-		move();
+
+		move(map);
 	}
 
-	public void move()
+	public void move(Map map)
 	{
 		if (!moving)
 			return;
@@ -58,6 +58,33 @@ public class Agent
 		float deltaX = (float) Math.cos(Math.toRadians(this.rotation));
 		float deltaY = (float) Math.sin(Math.toRadians(this.rotation));
 		this.position.move(deltaX, deltaY);
+
+		/*
+		 * Si l'agent dépasse les bornes de l'arène (tricheur), on le replace
+		 * sur la bordure et on lui dit d'arreter de bouger (comme ça le
+		 * controleur peut le detecter)
+		 */
+		if (this.position.getX() < 0)
+		{
+			this.position.setX(0);
+			setMoving(false);
+		}
+		else if (this.position.getX() >= map.getWidth())
+		{
+			this.position.setX(map.getWidth() - 1);
+			setMoving(false);
+		}
+
+		if (this.position.getY() < 0)
+		{
+			this.position.setY(0);
+			setMoving(false);
+		}
+		else if (this.position.getY() >= map.getHeight())
+		{
+			this.position.setY(map.getHeight() - 1);
+			setMoving(false);
+		}
 	}
 
 	public void setAgentController(AgentController agentController)
