@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Application
 {
 	public static final String FILE_NAME = "Map.txt";
@@ -5,25 +8,49 @@ public class Application
 	public static void main(String[] args)
 	{
 		Map map = new Map();
+		List<Agent> agents = new ArrayList<Agent>();
+
+		for (int i = 0; i < 10; i++)
+		{
+			agents.add(new Agent());
+			agents.get(i).setAgentController(new RandomAgentController());
+			agents.get(i).setPosition(new Position(i, 0));
+		}
 
 		map.readFromFile(FILE_NAME);
 		map.drawMap();
 		System.out.println();
 
-		Agent agent = new Agent();
-		agent.setPosition(new Position((int) map.getWidth() / 2, (int) map.getHeight() / 2));
-		agent.setAgentController(new RandomAgentController());
-
-		Agent agent2 = new Agent();
-		agent2.setPosition(new Position(1, 2));
-		agent2.setAgentController(new RandomAgentController());
-
 		int i = 0;
+		GameWindow window = new GameWindow(map, agents);
+
+		try
+		{
+			Thread.sleep(1000);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 
 		while (map.patchNumberLeft() > 0)
 		{
-			agent.update(map);
-			agent2.update(map);
+			for (Agent agent : agents)
+			{
+				agent.update(map);
+			}
+
+			window.repaint();
+
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+
 			i++;
 		}
 		System.out.println(i);

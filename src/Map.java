@@ -88,7 +88,7 @@ public class Map
 				{
 					if (line.charAt(index) == '*')
 					{
-						this.patches.add(new Position(nbLine, index));
+						this.patches.add(new Position(index, nbLine));
 					}
 				}
 				nbLine++;
@@ -129,9 +129,9 @@ public class Map
 
 	public void drawMap()
 	{
-		for (int x = 0; x < this.height; x++)
+		for (int y = 0; y < this.height; y++)
 		{
-			for (int y = 0; y < this.width; y++)
+			for (int x = 0; x < this.width; x++)
 			{
 				if (patches.contains(new Position(x, y)))
 				{
