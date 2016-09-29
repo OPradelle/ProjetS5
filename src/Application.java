@@ -8,14 +8,24 @@ public class Application
 
 		map.readFromFile(FILE_NAME);
 		map.drawMap();
+		System.out.println();
 
 		Agent agent = new Agent();
+		agent.setPosition(new Position((int) map.getWidth() / 2, (int) map.getHeight() / 2));
 		agent.setAgentController(new RandomAgentController());
 
-		for (int i = 0; i < 1000; i++)
+		Agent agent2 = new Agent();
+		agent2.setPosition(new Position(1, 2));
+		agent2.setAgentController(new RandomAgentController());
+
+		int i = 0;
+
+		while (map.patchNumberLeft() > 0)
 		{
 			agent.update(map);
-			System.out.println(i + ": " + agent.getPosition());
+			agent2.update(map);
+			i++;
 		}
+		System.out.println(i);
 	}
 }

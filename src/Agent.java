@@ -48,6 +48,8 @@ public class Agent
 			this.agentController.update(this, map);
 
 		move(map);
+
+		map.removePatch(position);
 	}
 
 	public void move(Map map)
@@ -60,8 +62,8 @@ public class Agent
 		this.position.move(deltaX, deltaY);
 
 		/*
-		 * Si l'agent dépasse les bornes de l'arène (tricheur), on le replace
-		 * sur la bordure et on lui dit d'arreter de bouger (comme ça le
+		 * Si l'agent dï¿½passe les bornes de l'arï¿½ne (tricheur), on le replace
+		 * sur la bordure et on lui dit d'arreter de bouger (comme ï¿½a le
 		 * controleur peut le detecter)
 		 */
 		if (this.position.getX() < 0)

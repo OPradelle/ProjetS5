@@ -107,7 +107,13 @@ public class Map
 		if (pos == null)
 			return;
 
-		this.patches.remove(getPatchIndex(pos));
+		int patchIndex = getPatchIndex(pos);
+		if (patchIndex >= 0)
+		{
+			this.patches.remove(patchIndex);
+			drawMap();
+			System.out.println();
+		}
 	}
 
 	public int getPatchIndex(Position pos)
@@ -148,5 +154,10 @@ public class Map
 		}
 
 		return null;
+	}
+
+	public int patchNumberLeft()
+	{
+		return this.patches.size();
 	}
 }
