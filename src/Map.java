@@ -20,7 +20,6 @@ public class Map
 	{
 		setWidth(width);
 		setHeight(height);
-
 	}
 
 	public void setHeight(int height)
@@ -111,8 +110,6 @@ public class Map
 		if (patchIndex >= 0)
 		{
 			this.patches.remove(patchIndex);
-			drawMap();
-			System.out.println();
 		}
 	}
 

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Application
 {
@@ -7,19 +8,18 @@ public class Application
 
 	public static void main(String[] args)
 	{
+		Random rand = new Random();
+
 		Map map = new Map();
 		List<Agent> agents = new ArrayList<Agent>();
+		map.readFromFile(FILE_NAME);
 
 		for (int i = 0; i < 10; i++)
 		{
 			agents.add(new Agent());
-			agents.get(i).setAgentController(new RandomAgentController());
-			agents.get(i).setPosition(new Position(i, 0));
+			agents.get(i).setAgentController(new LevyAgentController());
+			agents.get(i).setPosition(new Position(rand.nextInt(map.getWidth()), rand.nextInt(map.getHeight())));
 		}
-
-		map.readFromFile(FILE_NAME);
-		map.drawMap();
-		System.out.println();
 
 		int i = 0;
 		GameWindow window = new GameWindow(map, agents);
