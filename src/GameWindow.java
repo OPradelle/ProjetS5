@@ -6,8 +6,8 @@ public class GameWindow extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final int WINDOW_WIDTH = 1024;
-	public static final int WINDOW_HEIGHT = 768;
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 800;
 
 	public GameWindow(Map map, List<Agent> agents)
 	{

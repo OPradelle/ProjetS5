@@ -17,7 +17,7 @@ public class Application
 		for (int i = 0; i < 10; i++)
 		{
 			agents.add(new Agent());
-			agents.get(i).setAgentController(new LevyAgentController());
+			agents.get(i).setAgentController(new LessRandomAgentController());
 			agents.get(i).setPosition(new Position(rand.nextInt(map.getWidth()), rand.nextInt(map.getHeight())));
 		}
 
@@ -32,19 +32,19 @@ public class Application
 		{
 			e.printStackTrace();
 		}
-
+		
 		while (map.patchNumberLeft() > 0)
 		{
 			for (Agent agent : agents)
 			{
 				agent.update(map);
 			}
-
+			
 			window.repaint();
-
+			
 			try
 			{
-				Thread.sleep(100);
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException e)
 			{

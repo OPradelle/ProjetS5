@@ -29,147 +29,84 @@ public class DisplayMap extends JPanel
 
 		g.clearRect(0, 0, getWidth(), getHeight());
 
-		dessinerPremiereLigne(g);
+		int blocWidth = getWidth() / (this.map.getWidth() + 2);
+		int blocHeight = getHeight() / (this.map.getHeight() + 2);
 
-		// lignes
+		// colonnes
 		for (int i = 0; i < this.map.getWidth() + 2; i++)
 		{
-			// colonnes
-			for (int j = 1; j < this.map.getHeight() + 1; j++)
+			// lignes
+			for (int j = 0; j < this.map.getHeight() + 2; j++)
 			{
 				// Upper left corner of this terrain rect
-				int x = i * BLOC_SIZE;
-				int y = j * BLOC_SIZE;
+				int x = i * blocWidth;
+				int y = j * blocHeight;
 
 				Image img = null;
 
-				if (i == 0)
+				try
 				{
-					try
+					if (i == 0)
 					{
-						img = ImageIO.read(new File("img/mur_gauche.png"));
+						// Dessiner mur de gauche
+						if (j == 0)
+							img = ImageIO.read(new File("img/mur_haut_gauche.png"));
+						else if (j == this.map.getHeight() + 1)
+							img = ImageIO.read(new File("img/mur_bas_gauche.png"));
+						else
+							img = ImageIO.read(new File("img/mur_gauche.png"));
 					}
-					catch (IOException e1)
+					else if (i == this.map.getWidth() + 1)
 					{
-						e1.printStackTrace();
-					}
-
-					g.drawImage(img, x, y, this);
-				}
-				else if (i == this.map.getWidth() + 1)
-				{
-					try
-					{
-						img = ImageIO.read(new File("img/mur_droit.png"));
-					}
-					catch (IOException e1)
-					{
-						e1.printStackTrace();
-					}
-
-					g.drawImage(img, x, y, this);
-				}
-				else
-				{
-					if (this.map.getPatchIndex(new Position(i - 1, j - 1)) >= 0)
-					{
-						try
-						{
-							img = ImageIO.read(new File("img/apple2.png"));
-						}
-						catch (IOException e)
-						{
-							e.printStackTrace();
-						}
+						// Dessiner mur de droite
+						if (j == 0)
+							img = ImageIO.read(new File("img/mur_haut_droit.png"));
+						else if (j == this.map.getHeight() + 1)
+							img = ImageIO.read(new File("img/mur_bas_droit.png"));
+						else
+							img = ImageIO.read(new File("img/mur_droit.png"));
 					}
 					else
 					{
-						try
+						if (j == 0)
+							img = ImageIO.read(new File("img/mur_haut.png"));
+						else if (j == this.map.getHeight() + 1)
+							img = ImageIO.read(new File("img/mur_bas.png"));
+						else
 						{
-							img = ImageIO.read(new File("img/case_vide.png"));
-						}
-						catch (IOException e)
-						{
-							e.printStackTrace();
+							if (this.map.getPatchIndex(new Position(i - 1, j - 1)) >= 0)
+							{
+								img = ImageIO.read(new File("img/apple2.png"));
+							}
+							else
+							{
+								img = ImageIO.read(new File("img/case_vide.png"));
+							}
 						}
 					}
-				}
 
-				g.drawImage(img, x, y, this);
+					g.drawImage(img, x, y, blocWidth, blocHeight, this);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
-
-		dessinerDerniereLigne(g);
 
 		for (Agent agent : agents)
 		{
 			try
 			{
 				Image img = ImageIO.read(new File("img/pacman.png"));
-				g.drawImage(img, (int) (agent.getPosition().getX() + 1) * BLOC_SIZE, (int) (agent.getPosition().getY() + 1) * BLOC_SIZE,
-						this);
+				int x = ((int) (agent.getPosition().getX() + 1)) * blocWidth;
+				int y = ((int) (agent.getPosition().getY() + 1)) * blocHeight;
+				g.drawImage(img, x, y, blocWidth, blocHeight, this);
 			}
 			catch (IOException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void dessinerDerniereLigne(Graphics g)
-	{
-		Image img;
-		int i;
-
-		int positionDerniereLigne = this.map.getHeight() + 1;
-
-		try
-		{
-			img = ImageIO.read(new File("img/mur_bas_gauche.png"));
-			g.drawImage(img, 0, positionDerniereLigne * BLOC_SIZE, this);
-
-			for (i = 1; i < this.map.getWidth() + 1; i++)
-			{
-				img = ImageIO.read(new File("img/mur_bas.png"));
-				g.drawImage(img, i * BLOC_SIZE, positionDerniereLigne * BLOC_SIZE, this);
-
-			}
-
-			img = ImageIO.read(new File("img/mur_bas_droit.png"));
-			g.drawImage(img, (i) * BLOC_SIZE, positionDerniereLigne * BLOC_SIZE, this);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-
-	}
-
-	private void dessinerPremiereLigne(Graphics g)
-	{
-		Image img;
-		int i;
-
-		try
-		{
-			img = ImageIO.read(new File("img/mur_haut_gauche.png"));
-			g.drawImage(img, 0, 0, this);
-
-			for (i = 1; i < this.map.getWidth() + 1; i++)
-			{
-				img = ImageIO.read(new File("img/mur_haut.png"));
-				g.drawImage(img, i * BLOC_SIZE, 0, this);
-
-			}
-
-			img = ImageIO.read(new File("img/mur_haut_droit.png"));
-			g.drawImage(img, (i) * BLOC_SIZE, 0, this);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-
 	}
 }
