@@ -115,6 +115,9 @@ public class Map
 
 	public int getPatchIndex(Position pos)
 	{
+		if (this.patches == null)
+			return -1;
+		
 		for (int i = 0; i < this.patches.size(); i++)
 		{
 			if (this.patches.get(i).equals(pos))

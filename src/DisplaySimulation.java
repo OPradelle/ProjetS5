@@ -7,16 +7,14 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class DisplayMap extends JPanel
+public class DisplaySimulation extends JPanel
 {
-	private static final int BLOC_SIZE = 32;
-
 	private static final long serialVersionUID = 1L;
 
 	private Map map;
 	private List<Agent> agents;
 
-	public DisplayMap(Map map, List<Agent> agents)
+	public DisplaySimulation(Map map, List<Agent> agents)
 	{
 		this.map = map;
 		this.agents = agents;
@@ -94,19 +92,23 @@ public class DisplayMap extends JPanel
 			}
 		}
 
-		for (Agent agent : agents)
+		if(this.agents != null)
 		{
-			try
+			for (Agent agent : this.agents)
 			{
-				Image img = ImageIO.read(new File("img/pacman.png"));
-				int x = ((int) (agent.getPosition().getX() + 1)) * blocWidth;
-				int y = ((int) (agent.getPosition().getY() + 1)) * blocHeight;
-				g.drawImage(img, x, y, blocWidth, blocHeight, this);
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
+				try
+				{
+					Image img = ImageIO.read(new File("img/pacman.png"));
+					int x = ((int) (agent.getPosition().getX() + 1)) * blocWidth;
+					int y = ((int) (agent.getPosition().getY() + 1)) * blocHeight;
+					g.drawImage(img, x, y, blocWidth, blocHeight, this);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
+		
 	}
 }

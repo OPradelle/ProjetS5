@@ -4,34 +4,41 @@ import java.util.Random;
 
 public class Application
 {
-	public static final String FILE_NAME = "Map.txt";
-
-	public static void main(String[] args)
+	private GUI gui;
+	private Random rand;
+	
+	public Application(GUI gui)
 	{
-		Random rand = new Random();
+		this.gui = gui;
+		this.rand = new Random();
+	}
 
+	public void start()
+	{
+		do
+		{
+			this.gui.startDisplayMainMenu();
+			//startSimulation();
+			
+			this.gui.waitForAction();
+			startSimulation();
+		} while(true);
+	}
+	
+	public void startSimulation()
+	{
 		Map map = new Map();
+		map.readFromFile("Map.txt");
 		List<Agent> agents = new ArrayList<Agent>();
-		map.readFromFile(FILE_NAME);
-
-		for (int i = 0; i < 10; i++)
+		for(int i = 0; i < 10; i++)
 		{
 			agents.add(new Agent());
-			agents.get(i).setAgentController(new LessRandomAgentController());
-			agents.get(i).setPosition(new Position(rand.nextInt(map.getWidth()), rand.nextInt(map.getHeight())));
+			agents.get(i).setAgentController(new LevyAgentController());
+			agents.get(i).setPosition(new Position(this.rand.nextInt(map.getWidth()), this.rand.nextInt(map.getHeight())));
 		}
-
-		int i = 0;
-		GameWindow window = new GameWindow(map, agents);
-
-		try
-		{
-			Thread.sleep(1000);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		
+		this.gui.startDisplaySimulation(new DisplaySimulation(map, agents));
+		int numberOfRound = 0;
 		
 		while (map.patchNumberLeft() > 0)
 		{
@@ -39,20 +46,19 @@ public class Application
 			{
 				agent.update(map);
 			}
-			
-			window.repaint();
+			this.gui.repaint();
+			numberOfRound++;
 			
 			try
 			{
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
-
-			i++;
 		}
-		System.out.println(i);
+		
+		System.out.println("J'ai tout mangé en " + numberOfRound + " tours");
 	}
 }

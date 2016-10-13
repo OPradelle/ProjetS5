@@ -44,6 +44,9 @@ public class Agent
 
 	public void update(Map map)
 	{
+		if (map == null)
+			return;
+		
 		if (this.agentController != null)
 			this.agentController.update(this, map);
 
