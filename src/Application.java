@@ -4,12 +4,12 @@ import java.util.Random;
 
 public class Application
 {
-	private GUI gui;
+	private GUIManager guiManager;
 	private Random rand;
 	
-	public Application(GUI gui)
+	public Application(GUIManager guiManager)
 	{
-		this.gui = gui;
+		this.guiManager = guiManager;
 		this.rand = new Random();
 	}
 
@@ -17,10 +17,8 @@ public class Application
 	{
 		do
 		{
-			this.gui.startDisplayMainMenu();
-			//startSimulation();
+			this.guiManager.getDisplayMainMenu().waitForAction();
 			
-			this.gui.waitForAction();
 			startSimulation();
 		} while(true);
 	}
@@ -30,28 +28,31 @@ public class Application
 		Map map = new Map();
 		map.readFromFile("Map.txt");
 		List<Agent> agents = new ArrayList<Agent>();
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 1; i++)
 		{
 			agents.add(new Agent());
 			agents.get(i).setAgentController(new LevyAgentController());
 			agents.get(i).setPosition(new Position(this.rand.nextInt(map.getWidth()), this.rand.nextInt(map.getHeight())));
 		}
-		
-		this.gui.startDisplaySimulation(new DisplaySimulation(map, agents));
+
+
+		this.guiManager.getSimulationWindow().startDisplaySimulation(new DisplaySimulation(map, agents));
+		this.guiManager.showSimulationWindow();
 		int numberOfRound = 0;
 		
-		while (map.patchNumberLeft() > 0)
+		while (map.patchNumberLeft() > 0 && this.guiManager.getSimulationWindow().isVisible())
 		{
 			for (Agent agent : agents)
 			{
 				agent.update(map);
 			}
-			this.gui.repaint();
+
+			this.guiManager.getSimulationWindow().repaint();
 			numberOfRound++;
 			
 			try
 			{
-				Thread.sleep(10);
+				Thread.sleep(1);
 			}
 			catch (InterruptedException e)
 			{
@@ -59,6 +60,7 @@ public class Application
 			}
 		}
 		
-		System.out.println("J'ai tout mangé en " + numberOfRound + " tours");
+		this.guiManager.showResult(numberOfRound);
+		this.guiManager.hideimulationWindow();
 	}
 }

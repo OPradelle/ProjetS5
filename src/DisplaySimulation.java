@@ -13,7 +13,7 @@ public class DisplaySimulation extends JPanel
 
 	private Map map;
 	private List<Agent> agents;
-
+	
 	public DisplaySimulation(Map map, List<Agent> agents)
 	{
 		this.map = map;
@@ -21,12 +21,12 @@ public class DisplaySimulation extends JPanel
 	}
 
 	@Override
-	public void paint(Graphics g)
+	public void paintComponent(Graphics g)
 	{
-		super.paint(g);
+		super.paintComponent(g);
 
-		g.clearRect(0, 0, getWidth(), getHeight());
-
+		//g.clearRect(0, 0, getWidth(), getHeight());
+		
 		int blocWidth = getWidth() / (this.map.getWidth() + 2);
 		int blocHeight = getHeight() / (this.map.getHeight() + 2);
 
@@ -109,6 +109,5 @@ public class DisplaySimulation extends JPanel
 				}
 			}
 		}
-		
 	}
 }
