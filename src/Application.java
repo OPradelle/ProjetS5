@@ -52,15 +52,18 @@ public class Application
 			
 			try
 			{
-				Thread.sleep(1);
+				Thread.sleep(1000);
 			}
 			catch (InterruptedException e)
 			{
 				e.printStackTrace();
 			}
 		}
-		
-		this.guiManager.showResult(numberOfRound);
+
+		if (map.patchNumberLeft() == 0)
+		{
+			this.guiManager.showResult(numberOfRound);
+		}
 		this.guiManager.hideimulationWindow();
 	}
 }
