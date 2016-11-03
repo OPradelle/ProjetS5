@@ -126,7 +126,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		}
 	}
 
-	public void waitForAction()
+	public SimulationParameters waitForAction()
 	{
 		this.choiceMade = false;
 
@@ -141,5 +141,13 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 				e.printStackTrace();
 			}
 		}
+		
+
+		SimulationParameters simulation = new SimulationParameters();
+		simulation.setAgentNumber((int)this.numericAgentNumber.getValue());
+		simulation.setMovementType(this.comboBox.getSelectedIndex());
+		simulation.setSleepTime((int)this.numericTime.getValue());
+		
+		return simulation;
 	}
 }

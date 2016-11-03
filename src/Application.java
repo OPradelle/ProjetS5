@@ -6,32 +6,36 @@ public class Application
 {
 	private GUIManager guiManager;
 	private Random rand;
+	private AgentControllerFactory factory;
 	
 	public Application(GUIManager guiManager)
 	{
 		this.guiManager = guiManager;
 		this.rand = new Random();
+		this.factory = new AgentControllerFactory();
 	}
 
 	public void start()
 	{
 		do
 		{
-			this.guiManager.getDisplayMainMenu().waitForAction();
+			SimulationParameters simulation;
+			simulation = this.guiManager.getDisplayMainMenu().waitForAction();
 			
-			startSimulation();
+			if(simulation != null)
+				startSimulation(simulation);
 		} while(true);
 	}
 	
-	public void startSimulation()
+	public void startSimulation(SimulationParameters simulation)
 	{
 		Map map = new Map();
 		map.readFromFile("Map.txt");
 		List<Agent> agents = new ArrayList<Agent>();
-		for(int i = 0; i < 1; i++)
+		for(int i = 0; i < simulation.getAgentNumber(); i++)
 		{
 			agents.add(new Agent());
-			agents.get(i).setAgentController(new LevyAgentController());
+			agents.get(i).setAgentController(factory.factoryMethod(simulation.getMovementType()));
 			agents.get(i).setPosition(new Position(this.rand.nextInt(map.getWidth()), this.rand.nextInt(map.getHeight())));
 		}
 
@@ -52,7 +56,7 @@ public class Application
 			
 			try
 			{
-				Thread.sleep(1000);
+				Thread.sleep(simulation.getSleepTime());
 			}
 			catch (InterruptedException e)
 			{
