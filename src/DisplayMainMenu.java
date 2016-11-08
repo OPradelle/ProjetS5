@@ -12,10 +12,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.Icon;
+import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.SpinnerNumberModel;
+
 import java.awt.Color;
 import java.awt.SystemColor;
 
@@ -33,9 +36,15 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 	private JButton btnParcourir;
 	private JSpinner numericTime;
 	private JLabel lblNewLabel;
+	private JLabel lblFichier;
+
+	private JFileChooser fileChooser;
+	private String filePath;
 
 	public DisplayMainMenu()
 	{
+		fileChooser = new JFileChooser();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 615, 636);
 		contentPane = new JPanel();
@@ -45,7 +54,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 
 		labelCreation();
 
-		this.numericAgentNumber = new JSpinner();
+		this.numericAgentNumber = new JSpinner(new SpinnerNumberModel(1, 0, 100, 1));
 		this.numericAgentNumber.setBounds(334, 368, 131, 20);
 		contentPane.add(this.numericAgentNumber);
 
@@ -59,9 +68,10 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 
 		this.btnParcourir = new JButton("Parcourir ...");
 		this.btnParcourir.setBounds(334, 412, 131, 23);
+		this.btnParcourir.addActionListener(this);
 		contentPane.add(this.btnParcourir);
 
-		this.numericTime = new JSpinner();
+		this.numericTime = new JSpinner(new SpinnerNumberModel(1000, 0, 10000, 100));
 		this.numericTime.setBounds(334, 459, 131, 20);
 		contentPane.add(this.numericTime);
 
@@ -115,6 +125,12 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		lblTempsDattenteen.setFont(new Font("Aharoni", Font.PLAIN, 15));
 		lblTempsDattenteen.setBounds(133, 457, 191, 25);
 		contentPane.add(lblTempsDattenteen);
+
+		lblFichier = new JLabel("Fichier Map ...");
+		lblFichier.setForeground(new Color(255, 255, 255));
+		lblFichier.setFont(new Font("Aharoni", Font.PLAIN, 15));
+		lblFichier.setBounds(473, 411, 191, 25);
+		contentPane.add(lblFichier);
 	}
 
 	@Override
@@ -123,6 +139,21 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		if (e.getSource() == this.launchButton)
 		{
 			this.choiceMade = true;
+		}
+
+		else if (e.getSource() == this.btnParcourir)
+		{
+			this.fileChooser.setCurrentDirectory(new File("."));
+
+			int returnVal = this.fileChooser.showOpenDialog(this);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION)
+			{
+				File file = this.fileChooser.getSelectedFile();
+				filePath = file.getAbsolutePath();
+
+				lblFichier.setText(file.getName());
+			}
 		}
 	}
 
@@ -141,13 +172,13 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 				e.printStackTrace();
 			}
 		}
-		
 
 		SimulationParameters simulation = new SimulationParameters();
-		simulation.setAgentNumber((int)this.numericAgentNumber.getValue());
+		simulation.setAgentNumber((int) this.numericAgentNumber.getValue());
 		simulation.setMovementType(this.comboBox.getSelectedIndex());
-		simulation.setSleepTime((int)this.numericTime.getValue());
-		
+		simulation.setSleepTime((int) this.numericTime.getValue());
+		simulation.setFilePath(filePath);
+
 		return simulation;
 	}
 }

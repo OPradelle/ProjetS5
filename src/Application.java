@@ -30,7 +30,7 @@ public class Application
 	public void startSimulation(SimulationParameters simulation)
 	{
 		Map map = new Map();
-		map.readFromFile("Map.txt");
+		map.readFromFile(simulation.getFilePath());
 		List<Agent> agents = new ArrayList<Agent>();
 		for(int i = 0; i < simulation.getAgentNumber(); i++)
 		{
@@ -53,7 +53,7 @@ public class Application
 
 			this.guiManager.getSimulationWindow().repaint();
 			numberOfRound++;
-			
+
 			try
 			{
 				Thread.sleep(simulation.getSleepTime());
