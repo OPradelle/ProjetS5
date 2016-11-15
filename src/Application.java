@@ -64,7 +64,7 @@ public class Application
 
 		if (map.patchNumberLeft() == 0)
 		{
-			int numberOfRound = 0; // TEMPORAIRE
+			int numberOfRound = 0;
 			for (Agent agent : agents)
 			{
 				numberOfRound += agent.getAgentController().getNumberOfMoves();

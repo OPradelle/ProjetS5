@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
+import java.awt.Button;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -37,6 +38,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 	private JSpinner numericTime;
 	private JLabel lblNewLabel;
 	private JLabel lblFichier;
+	private JButton btnMapGenerator;
 
 	private JFileChooser fileChooser;
 	private String filePath;
@@ -75,6 +77,11 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		this.numericTime = new JSpinner(new SpinnerNumberModel(1000, 0, 10000, 100));
 		this.numericTime.setBounds(334, 459, 131, 20);
 		contentPane.add(this.numericTime);
+		
+		this.btnMapGenerator = new JButton("Générer map");
+		this.btnMapGenerator.addActionListener(this);
+		this.btnMapGenerator.setBounds(228, 500, 164, 25);
+		contentPane.add(this.btnMapGenerator);		
 
 		this.launchButton = new JButton("Lancer la simulation");
 		this.launchButton.setBounds(228, 542, 164, 25);
@@ -127,7 +134,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		lblTempsDattenteen.setBounds(133, 457, 191, 25);
 		contentPane.add(lblTempsDattenteen);
 
-		lblFichier = new JLabel("Fichier Map ...");
+		lblFichier = new JLabel("");
 		lblFichier.setForeground(new Color(255, 255, 255));
 		lblFichier.setFont(new Font("Aharoni", Font.PLAIN, 15));
 		lblFichier.setBounds(473, 411, 191, 25);
@@ -155,6 +162,10 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 
 				lblFichier.setText(file.getName());
 			}
+		}
+		else if (e.getSource() == this.btnMapGenerator)
+		{
+			// TODO open map generator displayer
 		}
 	}
 

@@ -10,14 +10,12 @@ public class OneByOneAgentController extends AgentController
 		this.numberOfMoves = 0;
 		this.rand = new Random();
 	}
-
 	
 	public void init(Agent agent)
 	{
 		this.initialPosition = new Position(agent.getPosition());
 	}
 
-	
 	public void update(Agent agent, Map map)
 	{
 		if (agent.isMoving() && agent.getPosition().getDistance(this.initialPosition) < 1)
@@ -31,8 +29,6 @@ public class OneByOneAgentController extends AgentController
 
 		this.initialPosition = new Position(agent.getPosition());
 		
-		
-		agent.setRotation(rand.nextInt(8)*45);
+		agent.setRotation(rand.nextInt(8) * 45);
 	}
-
 }

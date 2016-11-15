@@ -5,11 +5,13 @@ public class GUIManager implements Runnable
 {
 	private DisplayMainMenu displayMainMenu;
 	private SimulationWindow simulationWindow;
+	private DisplayMapGenerator displayMapGenerator;
 	
 	public GUIManager()
 	{
 		displayMainMenu = new DisplayMainMenu();
 		simulationWindow = new SimulationWindow();
+		displayMapGenerator = new DisplayMapGenerator();
 	}
 	
 	public DisplayMainMenu getDisplayMainMenu()
