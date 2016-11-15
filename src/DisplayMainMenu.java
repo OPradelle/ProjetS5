@@ -64,6 +64,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		this.comboBox.addItem("Marche aléatoire");
 		this.comboBox.addItem("Marche moins aléatoire");
 		this.comboBox.addItem("Marche de Levy");
+		this.comboBox.addItem("Déplacement case par case");
 		contentPane.add(this.comboBox);
 
 		this.btnParcourir = new JButton("Parcourir ...");

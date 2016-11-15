@@ -70,7 +70,7 @@ public class Application
 				numberOfRound += agent.getAgentController().getNumberOfMoves();
 			}
 			
-			this.guiManager.showResult(numberOfRound);
+			this.guiManager.showResult(numberOfRound / agents.size());
 		}
 		this.guiManager.hideimulationWindow();
 	}
