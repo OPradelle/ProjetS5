@@ -51,8 +51,6 @@ public class Agent
 			this.agentController.update(this, map);
 
 		move(map);
-
-		map.removePatch(position);
 	}
 
 	public void move(Map map)
@@ -96,5 +94,10 @@ public class Agent
 	{
 		this.agentController = agentController;
 		this.agentController.init(this);
+	}
+	
+	public AgentController getAgentController()
+	{
+		return this.agentController;
 	}
 }

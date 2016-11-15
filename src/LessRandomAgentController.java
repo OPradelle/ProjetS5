@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class LessRandomAgentController implements AgentController
+public class LessRandomAgentController extends AgentController
 {
 	private Position initialPosition;
 	private Random rand;
@@ -10,6 +10,7 @@ public class LessRandomAgentController implements AgentController
 	{
 		this.rand = new Random();
 		this.distance = 0;
+		this.numberOfMoves = 0;
 	}
 
 	@Override
@@ -28,6 +29,9 @@ public class LessRandomAgentController implements AgentController
 
 		if (!agent.isMoving())
 			agent.setMoving(true);
+		
+		map.removePatch(agent.getPosition());
+		this.numberOfMoves += 1;
 
 		this.initialPosition = new Position(agent.getPosition());
 		do

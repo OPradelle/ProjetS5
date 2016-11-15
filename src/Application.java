@@ -42,7 +42,6 @@ public class Application
 
 		this.guiManager.getSimulationWindow().startDisplaySimulation(new DisplaySimulation(map, agents));
 		this.guiManager.showSimulationWindow();
-		int numberOfRound = 0;
 		
 		while (map.patchNumberLeft() > 0 && this.guiManager.getSimulationWindow().isVisible())
 		{
@@ -52,7 +51,6 @@ public class Application
 			}
 
 			this.guiManager.getSimulationWindow().repaint();
-			numberOfRound++;
 
 			try
 			{
@@ -66,6 +64,12 @@ public class Application
 
 		if (map.patchNumberLeft() == 0)
 		{
+			int numberOfRound = 0; // TEMPORAIRE
+			for (Agent agent : agents)
+			{
+				numberOfRound += agent.getAgentController().getNumberOfMoves();
+			}
+			
 			this.guiManager.showResult(numberOfRound);
 		}
 		this.guiManager.hideimulationWindow();

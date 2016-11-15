@@ -1,6 +1,13 @@
-public interface AgentController
+public abstract class AgentController
 {
-	public void init(Agent agent);
+	protected int numberOfMoves;
+	
+	public abstract void init(Agent agent);
 
-	public void update(Agent agent, Map map);
+	public abstract void update(Agent agent, Map map);
+	
+	public int getNumberOfMoves()
+	{
+		return this.numberOfMoves;
+	}
 }

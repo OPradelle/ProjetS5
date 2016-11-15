@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class LevyAgentController implements AgentController
+public class LevyAgentController extends AgentController
 {
 	private static final int M_NUMBER = 100;
 	private Position initialPosition;
@@ -11,6 +11,7 @@ public class LevyAgentController implements AgentController
 	{
 		this.rand = new Random();
 		this.distance = 0;
+		this.numberOfMoves = 0;
 	}
 
 	@Override
@@ -27,6 +28,9 @@ public class LevyAgentController implements AgentController
 
 		if (!agent.isMoving())
 			agent.setMoving(true);
+		
+		map.removePatch(agent.getPosition());
+		this.numberOfMoves += 1;
 
 		this.initialPosition = new Position(agent.getPosition());
 		do
