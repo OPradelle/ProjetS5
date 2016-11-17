@@ -1,4 +1,7 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MapGenerator
 {
@@ -6,6 +9,9 @@ public class MapGenerator
 	private int proportion;
 	private int patchGroupNumber;
 	private int patchGroupSize;
+
+	private List<Position> patches;
+	private Random rand;
 
 	// Constructeur utilisé pour la génération sans groupe de patchs
 	public MapGenerator(int mapSize, int proportion)
@@ -20,14 +26,33 @@ public class MapGenerator
 		this.proportion = proportion;
 		this.patchGroupNumber = patchGroupNumber;
 		this.patchGroupSize = patchGroupSize;
+
+		this.rand = new Random();
 	}
-	
-	public void GenerateMap(String filename)
+
+	public void generateMap(String filename)
 	{
-		GenerateMap(new File(filename));
+		generateMap(new File(filename));
 	}
-	
-	public void GenerateMap(File file)
+
+	public void generateMap(File file)
+	{
+		if (mapSize == 0)
+			return;
+
+		this.patches = new ArrayList<Position>();
+		// Generate map
+		for (int x = 0; x < mapSize; x++)
+		{
+			for (int y = 0; y < mapSize; y++)
+			{
+			}
+		}
+
+		writeToFile(file);
+	}
+
+	private void writeToFile(File file)
 	{
 	}
 }
