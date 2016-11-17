@@ -1,4 +1,6 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -54,5 +56,33 @@ public class MapGenerator
 
 	private void writeToFile(File file)
 	{
+		String positionWithoutPatche = " ";
+		String positionWithPatche = "*";
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(this.mapSize);
+			writer.newLine();
+			for(int y = 0; y < this.mapSize; y++)
+			{
+				for(int x = 0; x < this.mapSize; x++)
+				{
+					if(this.patches.contains(new Position(x,y)))
+					{
+						writer.write(positionWithPatche);
+					}
+					else
+					{
+						writer.write(positionWithoutPatche);
+					}
+				}
+				writer.newLine();
+			}	
+			writer.close();
+		}
+		catch (Exception e)
+		{
+		System.out.print("erreur d'écriture sur le fichier" + file);;
+		}
 	}
 }
