@@ -44,14 +44,52 @@ public class MapGenerator
 
 		this.patches = new ArrayList<Position>();
 		// Generate map
+		if (patchGroupNumber <= 0)
+		{
+			generateMapWithoutGroups();
+		}
+		else
+		{
+			generateMapWithGroups();
+		}
+
+		writeToFile(file);
+	}
+
+	private void generateMapWithoutGroups()
+	{
 		for (int x = 0; x < mapSize; x++)
 		{
 			for (int y = 0; y < mapSize; y++)
 			{
+				if (this.rand.nextInt(100) < proportion)
+				{
+					this.patches.add(new Position(x, y));
+				}
 			}
 		}
+	}
 
-		writeToFile(file);
+	private void generateMapWithGroups()
+	{
+		for (int i = 0; i < patchGroupNumber; i++)
+		{
+			Position groupPosition = new Position(rand.nextInt(mapSize), rand.nextInt(mapSize));
+
+			for (int x = (int) groupPosition.getX() - patchGroupSize / 2; x < (int) groupPosition.getX() + patchGroupSize / 2; x++)
+			{
+				for (int y = (int) groupPosition.getY() - patchGroupSize / 2; y < (int) groupPosition.getY() + patchGroupSize / 2; y++)
+				{
+					if (x < 0 || y < 0 || x >= mapSize || y >= mapSize)
+						continue;
+
+					if (this.rand.nextInt(100) < proportion)
+					{
+						this.patches.add(new Position(x, y));
+					}
+				}
+			}
+		}
 	}
 
 	private void writeToFile(File file)
@@ -63,11 +101,11 @@ public class MapGenerator
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 			writer.write(this.mapSize);
 			writer.newLine();
-			for(int y = 0; y < this.mapSize; y++)
+			for (int y = 0; y < this.mapSize; y++)
 			{
-				for(int x = 0; x < this.mapSize; x++)
+				for (int x = 0; x < this.mapSize; x++)
 				{
-					if(this.patches.contains(new Position(x,y)))
+					if (this.patches.contains(new Position(x, y)))
 					{
 						writer.write(positionWithPatche);
 					}
@@ -77,12 +115,12 @@ public class MapGenerator
 					}
 				}
 				writer.newLine();
-			}	
+			}
 			writer.close();
 		}
 		catch (Exception e)
 		{
-		System.out.print("erreur d'écriture sur le fichier" + file);;
+			System.out.print("erreur d'ï¿½criture sur le fichier" + file);
 		}
 	}
 }
