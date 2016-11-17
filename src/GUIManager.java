@@ -9,9 +9,9 @@ public class GUIManager implements Runnable
 	
 	public GUIManager()
 	{
-		displayMainMenu = new DisplayMainMenu();
-		simulationWindow = new SimulationWindow();
-		displayMapGenerator = new DisplayMapGenerator();
+		this.displayMainMenu = new DisplayMainMenu(this);
+		this.simulationWindow = new SimulationWindow();
+		this.displayMapGenerator = new DisplayMapGenerator();
 	}
 	
 	public DisplayMainMenu getDisplayMainMenu()
@@ -50,5 +50,17 @@ public class GUIManager implements Runnable
 	public void showResult(int numberOfRound)
 	{
 		JOptionPane.showMessageDialog(null, numberOfRound + " tours effectués !", "Résultat des courses", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void showMapGenerator()
+	{
+		this.displayMapGenerator.setVisible(true);
+
+	}
+	
+	public void hideMapGenerator()
+	{
+		this.displayMapGenerator.setVisible(false);
+
 	}
 }

@@ -42,9 +42,13 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 
 	private JFileChooser fileChooser;
 	private String filePath;
+	
+	private GUIManager guiManager;
 
-	public DisplayMainMenu()
+	public DisplayMainMenu(GUIManager guiManager)
 	{
+		this.guiManager = guiManager;
+		
 		fileChooser = new JFileChooser();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -158,14 +162,14 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
 				File file = this.fileChooser.getSelectedFile();
-				filePath = file.getAbsolutePath();
+				this.filePath = file.getAbsolutePath();
 
 				lblFichier.setText(file.getName());
 			}
 		}
 		else if (e.getSource() == this.btnMapGenerator)
 		{
-			// TODO open map generator displayer
+			guiManager.showMapGenerator();
 		}
 	}
 
