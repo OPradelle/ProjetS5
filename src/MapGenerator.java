@@ -96,10 +96,11 @@ public class MapGenerator
 	{
 		String positionWithoutPatche = " ";
 		String positionWithPatche = "*";
+
 		try
 		{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(this.mapSize);
+			writer.write(Integer.toString(this.mapSize));
 			writer.newLine();
 			for (int y = 0; y < this.mapSize; y++)
 			{

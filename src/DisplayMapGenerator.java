@@ -12,6 +12,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.JButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class DisplayMapGenerator extends JFrame implements ActionListener
@@ -30,17 +32,21 @@ public class DisplayMapGenerator extends JFrame implements ActionListener
 	private JLabel lblNombreDeGroupes;
 	private JLabel lblDansChaqueGroupe;
 	private JLabel lblNombreDePatchs;
-	
+	private JLabel lblPourcent2;
+	private JLabel lblPourcent1;
+	private JLabel lblMapSize;
 	private JLabel lblGnrerUneCarte;
+	
 	private JFileChooser fileChooser;
 	private String filePath;
+
 	
 	
 	public DisplayMapGenerator() 
 	{
 		fileChooser = new JFileChooser();
 		
-		setBounds(100, 100, 380, 440);
+		setBounds(100, 100, 430, 440);
 		getContentPane().setLayout(null);
 		
 		labelCreation();
@@ -57,6 +63,14 @@ public class DisplayMapGenerator extends JFrame implements ActionListener
 		
 		this.slider1 = new JSlider();
 		this.slider1.setBounds(188, 107, 165, 26);
+		this.slider1.addChangeListener(new ChangeListener() 
+		{
+	      public void stateChanged(ChangeEvent e) 
+	      {
+	    	  int value = slider1.getValue();
+	    	  lblPourcent1.setText(value + " %");
+	      }
+	    });
 		getContentPane().add(this.slider1);
 		
 		this.spinnerMapSize = new JSpinner();
@@ -65,11 +79,19 @@ public class DisplayMapGenerator extends JFrame implements ActionListener
 		
 		this.slider2 = new JSlider();
 		this.slider2.setBounds(188, 305, 165, 26);
+		this.slider2.addChangeListener(new ChangeListener() 
+		{
+	      public void stateChanged(ChangeEvent e) 
+	      {
+	    	  int value = slider2.getValue();
+	    	  lblPourcent2.setText(value + " %");
+	      }
+	    });
 		getContentPane().add(this.slider2);
 		
 		this.btnEnregistrer = new JButton("Enregistrer");
 		this.btnEnregistrer.setFont(new Font("Dialog", Font.PLAIN, 15));
-		this.btnEnregistrer.setBounds(104, 358, 165, 23);
+		this.btnEnregistrer.setBounds(128, 357, 165, 23);
 		this.btnEnregistrer.addActionListener(this);
 		getContentPane().add(this.btnEnregistrer);
 		
@@ -77,20 +99,31 @@ public class DisplayMapGenerator extends JFrame implements ActionListener
 		this.spinnerSizeAmats.setBounds(160, 245, 83, 20);
 		getContentPane().add(this.spinnerSizeAmats);
 		
-		lblGnrerUneCarte = new JLabel("G\u00E9n\u00E9rer une carte");
-		lblGnrerUneCarte.setFont(new Font("Dialog", Font.BOLD, 20));
-		lblGnrerUneCarte.setBounds(110, 11, 183, 28);
-		getContentPane().add(lblGnrerUneCarte);
+		this.lblGnrerUneCarte = new JLabel("G\u00E9n\u00E9rer une carte");
+		this.lblGnrerUneCarte.setFont(new Font("Dialog", Font.BOLD, 20));
+		this.lblGnrerUneCarte.setBounds(110, 11, 183, 28);
+		getContentPane().add(this.lblGnrerUneCarte);
+		
+		this.lblPourcent1 = new JLabel("50 %");
+		this.lblPourcent1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		this.lblPourcent1.setBounds(363, 110, 51, 20);
+		getContentPane().add(this.lblPourcent1);
+		
+		this.lblPourcent2 = new JLabel("50 %");
+		this.lblPourcent2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		this.lblPourcent2.setBounds(363, 305, 51, 20);
+		getContentPane().add(this.lblPourcent2);
 		
 		hideComponents(true);
+		
 	}
 
 	private void labelCreation()
 	{
-		JLabel lblTailleDeLa = new JLabel("Taille de la carte :");
-		lblTailleDeLa.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblTailleDeLa.setBounds(33, 61, 173, 20);
-		getContentPane().add(lblTailleDeLa);
+		this.lblMapSize = new JLabel("Taille de la carte :");
+		this.lblMapSize.setFont(new Font("Dialog", Font.PLAIN, 15));
+		this.lblMapSize.setBounds(33, 61, 173, 20);
+		getContentPane().add(this.lblMapSize);
 		
 		this.lblProportionDePatchs = new JLabel("Proportion de patchs :");
 		this.lblProportionDePatchs.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -146,6 +179,7 @@ public class DisplayMapGenerator extends JFrame implements ActionListener
 		}
 		if (e.getSource() == this.btnEnregistrer)
 		{
+			MapGenerator mapGenerator = mapGeneratorCreation();
 			this.fileChooser.setCurrentDirectory(new File("."));
 
 			int returnVal = this.fileChooser.showDialog(this, "Enregistrer");
@@ -153,11 +187,26 @@ public class DisplayMapGenerator extends JFrame implements ActionListener
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
 				File file = this.fileChooser.getSelectedFile();
-				filePath = file.getAbsolutePath();
+				this.filePath = file.getAbsolutePath();
 			}
+			mapGenerator.generateMap(this.filePath);
+			this.dispose();
 		}
-		
 	}
 
-	
+	public MapGenerator mapGeneratorCreation()
+	{
+		MapGenerator mapGenerator;
+		
+		if (this.chckbxFaireDesAmats.isSelected())
+		{
+			mapGenerator = new MapGenerator((int)this.spinnerMapSize.getValue(), this.slider2.getValue(), (int)this.spinnerAmatsNumber.getValue(), (int)this.spinnerSizeAmats.getValue());
+		}
+		else
+		{
+			mapGenerator = new MapGenerator((int)this.spinnerMapSize.getValue(), this.slider1.getValue());
+		}
+		
+		return mapGenerator;
+	}
 }
