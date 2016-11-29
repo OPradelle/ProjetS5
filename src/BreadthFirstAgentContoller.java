@@ -62,20 +62,31 @@ public class BreadthFirstAgentContoller extends AgentController
 				this.toVisit.add(pos);
 			}
 		}
-
-		// TODO poll == NULL
+		
 		this.visited.add(new Position(this.initialPosition));
 		Position newTarget = this.toVisit.poll();
 		this.distance = newTarget.getDistance(this.initialPosition);
-		agent.setRotation(getAngle(this.initialPosition, newTarget));
-
-		System.out.println(this.initialPosition + "->" + newTarget + ": " + agent.getRotation());
+		
+		float angle = getAngle(this.initialPosition, newTarget);
+		agent.setRotation(angle);
 	}
 
 	private float getAngle(Position origin, Position target)
 	{
-		Position ref = new Position(origin.getX() + 100, origin.getY());
+		// http://stackoverflow.com/a/38024982
+		double x = target.getX() - origin.getX();
+		double y = target.getY() - origin.getY();
 		
-		return (float)(Math.acos((Math.pow(origin.getDistance(target), 2) + Math.pow(origin.getDistance(ref), 2) - Math.pow(target.getDistance(ref), 2))/(2 * origin.getDistance(target) * origin.getDistance(ref))) * 180 / Math.PI);
+		double magnitude = Math.sqrt(x * x + y * y);
+		double angle = 0;
+		
+		if(magnitude > 0)
+            angle = Math.acos(x / magnitude);
+
+        angle = angle * 180 / Math.PI;
+        if (y < 0)
+            angle = 360 - angle;
+
+        return (float)angle;
 	}
 }
