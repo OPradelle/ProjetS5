@@ -11,6 +11,8 @@ public class AgentControllerFactory
 			case 2: return new LevyAgentController();
 			case 3: return new OneByOneAgentController();
 			case 4: return new BreadthFirstAgentContoller();
+			case 5: return new CaseMarkerAgentController();
+			case 6: return new SharedCaseMarkerAgentController();
 			
 			default : return null;
 		}
