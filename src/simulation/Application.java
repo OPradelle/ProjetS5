@@ -1,6 +1,12 @@
+package simulation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import controllers.AgentControllerFactory;
+import display.DisplaySimulation;
+import display.GUIManager;
 
 public class Application
 {

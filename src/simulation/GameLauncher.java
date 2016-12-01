@@ -1,4 +1,7 @@
+package simulation;
+
 import javax.swing.SwingUtilities;
+import display.GUIManager;
 
 public class GameLauncher
 {

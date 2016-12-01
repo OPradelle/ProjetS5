@@ -1,3 +1,5 @@
+package display;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,6 +21,8 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.SpinnerNumberModel;
+
+import simulation.SimulationParameters;
 
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -67,10 +71,10 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		this.comboBox = new JComboBox();
 		comboBox.setForeground(SystemColor.infoText);
 		this.comboBox.setBounds(334, 322, 203, 20);
-		this.comboBox.addItem("Marche alÈatoire");
-		this.comboBox.addItem("Marche moins alÈatoire");
+		this.comboBox.addItem("Marche al√©atoire");
+		this.comboBox.addItem("Marche moins al√©atoire");
 		this.comboBox.addItem("Marche de Levy");
-		this.comboBox.addItem("DÈplacement case par case");
+		this.comboBox.addItem("D√©placement case par case");
 		this.comboBox.addItem("Exploration en Largeur");
 		contentPane.add(this.comboBox);
 
@@ -83,7 +87,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		this.numericTime.setBounds(334, 459, 131, 20);
 		contentPane.add(this.numericTime);
 		
-		this.btnMapGenerator = new JButton("GÈnÈrer map");
+		this.btnMapGenerator = new JButton("G√©n√©rer map");
 		this.btnMapGenerator.addActionListener(this);
 		this.btnMapGenerator.setBounds(228, 500, 164, 25);
 		contentPane.add(this.btnMapGenerator);		
@@ -121,7 +125,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		lblTypeDeDplacment.setBounds(133, 366, 191, 25);
 		contentPane.add(lblTypeDeDplacment);
 
-		JLabel label = new JLabel("Type de deplacement");
+		JLabel label = new JLabel("Type de d√©placement");
 		label.setForeground(new Color(255, 255, 255));
 		label.setFont(new Font("Aharoni", Font.PLAIN, 15));
 		label.setBounds(133, 320, 191, 25);

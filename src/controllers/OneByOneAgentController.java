@@ -1,4 +1,10 @@
+package controllers;
+
 import java.util.Random;
+
+import simulation.Agent;
+import simulation.Map;
+import simulation.Position;
 
 public class OneByOneAgentController extends AgentController 
 {

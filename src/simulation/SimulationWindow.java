@@ -1,4 +1,7 @@
+package simulation;
 import javax.swing.JFrame;
+
+import display.DisplaySimulation;
 
 public class SimulationWindow extends JFrame
 {

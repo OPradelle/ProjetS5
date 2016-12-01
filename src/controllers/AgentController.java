@@ -1,3 +1,8 @@
+package controllers;
+
+import simulation.Agent;
+import simulation.Map;
+
 public abstract class AgentController
 {
 	protected int numberOfMoves;

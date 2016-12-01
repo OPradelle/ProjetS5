@@ -1,3 +1,5 @@
+package display;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
@@ -14,6 +16,8 @@ import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import simulation.MapGenerator;
 
 
 public class DisplayMapGenerator extends JFrame implements ActionListener

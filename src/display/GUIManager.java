@@ -1,4 +1,8 @@
+package display;
+
 import javax.swing.JOptionPane;
+
+import simulation.SimulationWindow;
 
 
 public class GUIManager implements Runnable
@@ -49,7 +53,7 @@ public class GUIManager implements Runnable
 	
 	public void showResult(int numberOfRound)
 	{
-		JOptionPane.showMessageDialog(null, numberOfRound + " tours effectués !", "Résultat des courses", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, numberOfRound + " tours effectuï¿½s !", "Rï¿½sultat des courses", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	public void showMapGenerator()

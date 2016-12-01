@@ -1,7 +1,13 @@
+package controllers;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import simulation.Agent;
+import simulation.Map;
+import simulation.Position;
 
 public class BreadthFirstAgentContoller extends AgentController
 {

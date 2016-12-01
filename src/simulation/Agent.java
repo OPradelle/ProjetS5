@@ -1,3 +1,7 @@
+package simulation;
+
+import controllers.AgentController;
+
 public class Agent
 {
 	private AgentController agentController;

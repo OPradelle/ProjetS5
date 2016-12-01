@@ -1,3 +1,5 @@
+package controllers;
+
 public class AgentControllerFactory 
 {
 	public AgentController factoryMethod(int type)
