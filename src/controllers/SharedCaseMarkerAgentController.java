@@ -44,11 +44,12 @@ public class SharedCaseMarkerAgentController extends AgentController
 			{
 				for (int y = 0; y < map.getHeight(); y++)
 				{
-					toVisit.add(new Position(x, y));
+					if (!toVisit.contains(new Position(x, y)))
+						toVisit.add(new Position(x, y));
 				}
 			}
 
-			this.toVisitInitialised = true;
+			toVisitInitialised = true;
 			toVisit.remove(this.initialPosition);
 		}
 		
