@@ -48,10 +48,8 @@ public class CaseMarkerAgentController extends AgentController
 					this.toVisit.add(new Position(x, y));
 				}
 			}
-			System.out.println(this.toVisit.size());
 			this.toVisitInitialised = true;
 			this.toVisit.remove(this.initialPosition);
-			System.out.println(this.toVisit.size());
 		}
 
 		if (agent.isMoving() && agent.getPosition().getDistance(this.initialPosition) < distance)
