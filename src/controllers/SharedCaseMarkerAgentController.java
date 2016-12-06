@@ -49,23 +49,25 @@ public class SharedCaseMarkerAgentController extends AgentController
 			}
 
 			this.toVisitInitialised = true;
+			toVisit.remove(this.initialPosition);
 		}
 		
-		if (toVisit.isEmpty())
-			return;
-
 		if (agent.isMoving() && agent.getPosition().getDistance(this.initialPosition) < distance)
 			return;
-
-		if (!agent.isMoving())
-			agent.setMoving(true);
 
 		// Correction of float errors
 		agent.setPosition(this.nextPosition);
 		this.initialPosition = new Position(agent.getPosition());
+				
 
 		map.removePatch(agent.getPosition());
 		this.numberOfMoves += 1;
+				
+		if (toVisit.isEmpty())
+			return;
+
+		if (!agent.isMoving())
+			agent.setMoving(true);
 
 		int nextTargetId = this.rand.nextInt(toVisit.size());
 		this.nextPosition = toVisit.remove(nextTargetId);

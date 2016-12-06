@@ -59,7 +59,6 @@ public class CaseMarkerAgentController extends AgentController
 		agent.setPosition(this.nextPosition);
 		this.initialPosition = new Position(agent.getPosition());
 		
-		System.out.println(agent.getPosition());
 
 		map.removePatch(agent.getPosition());
 		this.numberOfMoves += 1;
