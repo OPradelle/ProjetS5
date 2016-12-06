@@ -38,6 +38,7 @@ public class CaseMarkerAgentController extends AgentController
 	@Override
 	public void update(Agent agent, Map map)
 	{
+		
 		if (!this.toVisitInitialised)
 		{
 			for (int x = 0; x < map.getWidth(); x++)
@@ -47,25 +48,29 @@ public class CaseMarkerAgentController extends AgentController
 					this.toVisit.add(new Position(x, y));
 				}
 			}
-
+			System.out.println(this.toVisit.size());
 			this.toVisitInitialised = true;
+			this.toVisit.remove(this.initialPosition);
+			System.out.println(this.toVisit.size());
 		}
-		
-		if (this.toVisit.isEmpty())
-			return;
 
 		if (agent.isMoving() && agent.getPosition().getDistance(this.initialPosition) < distance)
 			return;
 
-		if (!agent.isMoving())
-			agent.setMoving(true);
-
 		// Correction of float errors
 		agent.setPosition(this.nextPosition);
 		this.initialPosition = new Position(agent.getPosition());
+		
+		System.out.println(agent.getPosition());
 
 		map.removePatch(agent.getPosition());
 		this.numberOfMoves += 1;
+		
+		if (this.toVisit.isEmpty())
+			return;
+
+		if (!agent.isMoving())
+			agent.setMoving(true);
 
 		int nextTargetId = this.rand.nextInt(this.toVisit.size());
 		this.nextPosition = this.toVisit.remove(nextTargetId);
