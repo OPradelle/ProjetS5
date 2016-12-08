@@ -81,7 +81,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		contentPane.add(this.comboBox);
 
 		this.btnParcourir = new JButton("Parcourir ...");
-		this.btnParcourir.setBounds(334, 412, 131, 23);
+		this.btnParcourir.setBounds(367, 412, 98, 23);
 		this.btnParcourir.addActionListener(this);
 		contentPane.add(this.btnParcourir);
 
@@ -89,9 +89,17 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		this.numericTime.setBounds(334, 459, 131, 20);
 		contentPane.add(this.numericTime);
 		
-		this.btnMapGenerator = new JButton("Générer map");
+		this.btnMapGenerator = new JButton("");
 		this.btnMapGenerator.addActionListener(this);
-		this.btnMapGenerator.setBounds(228, 500, 164, 25);
+		this.btnMapGenerator.setBounds(334, 412, 23, 23);
+		
+		try 
+		{
+			this.btnMapGenerator.setIcon(new ImageIcon(ImageIO.read(new File("img/build.png"))));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		contentPane.add(this.btnMapGenerator);		
 
 		this.launchButton = new JButton("Lancer la simulation");
@@ -148,7 +156,7 @@ public class DisplayMainMenu extends JFrame implements ActionListener
 		lblFichier = new JLabel("");
 		lblFichier.setForeground(new Color(255, 255, 255));
 		lblFichier.setFont(new Font("Aharoni", Font.PLAIN, 15));
-		lblFichier.setBounds(473, 411, 191, 25);
+		lblFichier.setBounds(473, 411, 127, 25);
 		contentPane.add(lblFichier);
 	}
 
