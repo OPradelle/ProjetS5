@@ -58,7 +58,6 @@ public class CaseMarkerAgentController extends AgentController
 		// Correction of float errors
 		agent.setPosition(this.nextPosition);
 		this.initialPosition = new Position(agent.getPosition());
-		
 
 		map.removePatch(agent.getPosition());
 		this.numberOfMoves += 1;
